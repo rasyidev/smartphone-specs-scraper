@@ -8,12 +8,12 @@ import json
 # page = requests.get(url)
 
 # Create a file from the binary content
-# file = open('xiaomi_12-11285.html', 'wb')
+# file = open('scraped_data/xiaomi_12-11285.html', 'wb')
 # file.write(page.content)
 # file.close()
 
 # Load downloaded html file into bs4 object
-file = open('xiaomi_12-11285.html', 'r')
+file = open('scraped_data/xiaomi_12-11285.html', 'r')
 soup = bs(file, 'html.parser')
 file.close()
 
@@ -118,7 +118,7 @@ data = {
   "loudspeaker": loudspeaker,
 }
 
-file = open('xiaomi_12.json', 'w')
+file = open('scraped_data/xiaomi_12.json', 'w')
 json_data = json.dumps(data, indent=2, sort_keys=True)
 file.write(json_data)
 file.close()
