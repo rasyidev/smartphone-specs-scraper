@@ -79,7 +79,7 @@ class SmartphoneSpecScraper:
     self.data['usb'] = soup.select_one('[data-spec="usb"]').text.strip() if soup.select_one('[data-spec="usb"]') != None else 'undefined'
     self.data['sensors'] = soup.select_one('[data-spec="sensors"]').text.strip() if soup.select_one('[data-spec="sensors"]') != None else 'undefined'
     self.data['battery'] = soup.select_one('[data-spec="batdescription1"]').text.strip() if soup.select_one('[data-spec="batdescription1"]') != None else 'undefined'
-    self.data['battery_charging'] = soup.select_one('[href*="battery-charging"]').parent.next_sibling.next_sibling.text.strip() if soup.select_one('[href*="battery-charging"]').parent.next_sibling.next_sibling != None else 'undefined'
+    self.data['battery_charging'] = soup.select_one('[href*="battery-charging"]').parent.next_sibling.next_sibling.text.strip() if soup.select_one('[href*="battery-charging"]') and soup.select_one('[href*="battery-charging"]').parent.next_sibling.next_sibling != None else 'undefined'
     self.data['colors'] = soup.select_one('[data-spec="colors"]').text.strip() if soup.select_one('[data-spec="colors"]') != None else 'undefined'
     self.data['models'] = soup.select_one('[data-spec="models"]').text.strip() if soup.select_one('[data-spec="models"]') != None else 'undefined'
     self.data['sar_us'] = soup.select_one('[data-spec="sar-us"]').text.strip() if soup.select_one('[data-spec="sar-us"]') != None else 'undefined'
@@ -87,7 +87,7 @@ class SmartphoneSpecScraper:
     self.data['price'] = soup.select_one('[data-spec="price"]').text.strip() if soup.select_one('[data-spec="price"]') != None else 'undefined'
     self.data['benchmarks'] = soup.select_one('[data-spec="tbench"]').text.strip() if soup.select_one('[data-spec="tbench"]') != None else 'undefined'
     self.data['battery_life'] = soup.select_one('[data-spec="batlife"]').text.strip() if soup.select_one('[data-spec="batlife"]') != None else 'undefined'
-    self.data['loudspeaker'] = soup.select_one('[href*="loudspeaker"]').parent.next_sibling.next_sibling.text.strip() if soup.select_one('[href*="loudspeaker"]').parent.next_sibling.next_sibling != None else 'undefined'
+    self.data['loudspeaker'] = soup.select_one('[href*="loudspeaker"]').parent.next_sibling.next_sibling.text.strip() if soup.select_one('[href*="loudspeaker"]') and soup.select_one('[href*="loudspeaker"]').parent.next_sibling.next_sibling != None else 'undefined'
 
   def __export_to_json(self):
     output_filename = self.data['modelname'].lower().replace(" ", "_")
@@ -99,6 +99,7 @@ class SmartphoneSpecScraper:
 
   def __reset_data(self):
     self.data = {}
-
+  
 s = SmartphoneSpecScraper()
-s.offline_scrape('scraped_data/google_pixel_6_pro-10918.html')
+s.online_scrape('https://www.gsmarena.com/xiaomi_redmi_note_11s_5g-11419.php', save_html=True)
+
