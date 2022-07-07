@@ -86,7 +86,7 @@ class SmartphoneSpecScraper:
     self.data['sar_eu'] = soup.select_one('[data-spec="sar-eu"]').text.strip() if soup.select_one('[data-spec="sar-eu"]') != None else 'undefined'
     self.data['price'] = soup.select_one('[data-spec="price"]').text.strip() if soup.select_one('[data-spec="price"]') != None else 'undefined'
     self.data['benchmarks'] = soup.select_one('[data-spec="tbench"]').text.strip() if soup.select_one('[data-spec="tbench"]') != None else 'undefined'
-    self.data['battery_life'] = soup.select_one('[data-spec="batlife"]').text if soup.select_one('[data-spec="batlife"]') != None else 'undefined'
+    self.data['battery_life'] = soup.select_one('[data-spec="batlife"]').text.strip() if soup.select_one('[data-spec="batlife"]') != None else 'undefined'
     self.data['loudspeaker'] = soup.select_one('[href*="loudspeaker"]').parent.next_sibling.next_sibling.text.strip() if soup.select_one('[href*="loudspeaker"]').parent.next_sibling.next_sibling != None else 'undefined'
 
   def __export_to_json(self):
