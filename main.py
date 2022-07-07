@@ -10,7 +10,7 @@ class SmartphoneSpecScraper:
 
   def online_scrape(self, url, save_html=False):
     # Check if the url is from gsmarena.com
-    if re.match('gsmarena.com\/\S+-\d+.php', url) == None:
+    if re.search('gsmarena.com\/\S+-\d+.php', url) == None:
       raise Error('Make sure the url is from gsmarena.com and at particular smartphone specification!')
 
     # Request from the url and save the object
@@ -35,6 +35,7 @@ class SmartphoneSpecScraper:
     file.close()
 
     self.__scrape(soup)
+    self.__export_to_json()
 
   def __scrape(self, soup):
     # This method is private for this class only
@@ -70,7 +71,7 @@ class SmartphoneSpecScraper:
     self.data['selfie_camera'] = soup.select_one('[data-spec="cam2modules"]').text.strip() if soup.select_one('[data-spec="cam2modules"]') != None else 'undefined'
     self.data['selfie_camera_video'] = soup.select_one('[data-spec="cam2video"]').text.strip() if soup.select_one('[data-spec="cam2video"]') != None else 'undefined'
     self.data['wlan'] = soup.select_one('[data-spec="wlan"]').text.strip() if soup.select_one('[data-spec="wlan"]') != None else 'undefined'
-    self.data['infrared_port'] = soup.select_one('[href*="irda"]').parent.next_sibling.next_sibling.text.strip() if soup.select_one('[href*="irda"]').parent.next_sibling.next_sibling != None else 'undefined'
+    self.data['infrared_port'] = soup.select_one('[href*="irda"]').parent.next_sibling.next_sibling.text.strip() if soup.select_one('[href*="irda"]') and soup.select_one('[href*="irda"]').parent.next_sibling.next_sibling != None else 'undefined'
     self.data['bluetooth'] = soup.select_one('[data-spec="bluetooth"]').text.strip() if soup.select_one('[data-spec="bluetooth"]') != None else 'undefined'
     self.data['gps'] = soup.select_one('[data-spec="gps"]').text.strip() if soup.select_one('[data-spec="gps"]') != None else 'undefined'
     self.data['nfc'] = soup.select_one('[data-spec="nfc"]').text.strip() if soup.select_one('[data-spec="nfc"]') != None else 'undefined'
@@ -88,9 +89,9 @@ class SmartphoneSpecScraper:
     self.data['battery_life'] = soup.select_one('[data-spec="batlife"]').text if soup.select_one('[data-spec="batlife"]') != None else 'undefined'
     self.data['loudspeaker'] = soup.select_one('[href*="loudspeaker"]').parent.next_sibling.next_sibling.text.strip() if soup.select_one('[href*="loudspeaker"]').parent.next_sibling.next_sibling != None else 'undefined'
 
-
   def __export_to_json(self):
-    file = open(f'scraped_data/{self.data.modelname}.json', 'w')
+    output_filename = self.data['modelname'].lower().replace(" ", "_")
+    file = open(f'scraped_data/{output_filename}.json', 'w')
     json_data = json.dumps(self.data, indent=2, sort_keys=True)
     file.write(json_data)
     file.close()
@@ -98,3 +99,6 @@ class SmartphoneSpecScraper:
 
   def __reset_data(self):
     self.data = {}
+
+s = SmartphoneSpecScraper()
+s.offline_scrape('scraped_data/google_pixel_6_pro-10918.html')
