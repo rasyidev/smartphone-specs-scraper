@@ -19,7 +19,7 @@ class SmartphoneSpecScraper:
     if save_html:
       # Create a file from the binary content
       filename = url.split('/')[-1].split('.')[0]
-      file = open(f'scraped_data/{filename}.html', 'wb')
+      file = open(f'/content/smartphone-specs-scraper/scraped_data/{filename}.html', 'wb')
       file.write(page.content)
       file.close()
 
@@ -92,7 +92,7 @@ class SmartphoneSpecScraper:
 
   def __export_to_json(self):
     output_filename = self.data['modelname'].lower().replace(" ", "_")
-    file = open(f'scraped_data/{output_filename}.json', 'w')
+    file = open(f'/content/smartphone-specs-scraper/scraped_data/{output_filename}.json', 'w')
     json_data = json.dumps(self.data, indent=2, sort_keys=True)
     file.write(json_data)
     file.close()
@@ -102,5 +102,26 @@ class SmartphoneSpecScraper:
     self.data = {}
   
 s = SmartphoneSpecScraper()
-s.online_scrape('https://www.gsmarena.com/samsung_galaxy_z_flip3_5g-11044.php', save_html=True)
+
+urls = [
+  "https://m.gsmarena.com/samsung_galaxy_a23-11373.php",
+  "https://m.gsmarena.com/samsung_galaxy_m23-11403.php",
+  "https://m.gsmarena.com/samsung_galaxy_m33-11404.php",
+  "https://m.gsmarena.com/samsung_galaxy_f23-11406.php",
+  "https://m.gsmarena.com/samsung_galaxy_a33_5g-11429.php",
+  "https://m.gsmarena.com/samsung_galaxy_a53_5g-11268.php",
+  "https://m.gsmarena.com/samsung_galaxy_a73_5g-11257.php",
+  "https://m.gsmarena.com/samsung_galaxy_s20_fe_2022-11459.php",
+  "https://m.gsmarena.com/samsung_galaxy_m53-11439.php",
+  "https://m.gsmarena.com/samsung_galaxy_tab_s6_lite_(2022)-11524.php",
+  "https://m.gsmarena.com/samsung_galaxy_m13-11564.php",
+  "https://m.gsmarena.com/samsung_galaxy_xcover6_pro-11600.php",
+  "https://m.gsmarena.com/samsung_galaxy_m21_2021-11015.php",
+  "https://m.gsmarena.com/samsung_galaxy_f22-10996.php"
+]
+
+import time
+for url in urls:
+  s.online_scrape(url, save_html=True)
+  time.sleep(60)
 
