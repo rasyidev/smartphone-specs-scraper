@@ -123,5 +123,5 @@ urls = [
 import time
 for url in urls:
   s.online_scrape(url, save_html=True)
-  time.sleep(60)
+  time.sleep(20)
 
