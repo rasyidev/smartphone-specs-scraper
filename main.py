@@ -1,4 +1,4 @@
-from msilib.schema import Error
+# from msilib.schema import Error
 from bs4 import BeautifulSoup as bs
 import requests
 import json
@@ -44,7 +44,7 @@ class SmartphoneSpecScraper:
     # Why though? 
     # Well, I just feels it is easier for me since i've learn CSS
     self.data['modelname'] = soup.select_one('[data-spec="modelname"]').text.strip() if soup.select_one('[data-spec="modelname"]') != None else 'undefined'
-    self.data['image_url'] = soup.select_one(".specs-photo-main > a > img").attrs['src'] or 'undefined'
+    self.data['image_url'] = soup.select_one(".specs-photo-main > a > img").attrs['src'] if soup.select_one(".specs-photo-main > a > img") else 'undefined'
     self.data['network_tech'] = soup.select_one('[data-spec="nettech"]').text.strip() if soup.select_one('[data-spec="nettech"]') != None else 'undefined'
     self.data['network_3g_bands'] = soup.select_one('[data-spec="net3g"]').text.strip() if soup.select_one('[data-spec="net3g"]') != None else 'undefined'
     self.data['network_4g_bands'] = soup.select_one('[data-spec="net4g"]').text.strip() if soup.select_one('[data-spec="net4g"]') != None else 'undefined'
