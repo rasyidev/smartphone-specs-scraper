@@ -30,7 +30,7 @@ class SmartphoneSpecScraper:
     
   def offline_scrape(self, file_path):
     # Load downloaded html file into bs4 object
-    file = open(file_path, 'r')
+    file = open(file_path, 'r', encoding="utf8")
     soup = bs(file, 'html.parser')
     file.close()
 
@@ -119,10 +119,9 @@ urls = [
   "https://m.gsmarena.com/samsung_galaxy_f22-10996.php"
 ]
 
-# s.offline_scrape("scraped_data/Apple iPhone 12 - Full phone specifications.html")
-import time
-for url in urls:
-  s.online_scrape(url, save_html=True)
-  time.sleep(30)
+s.offline_scrape("scraped_data/14/File.html")
+# import time
+# for i in range(15,16):
+#   s.offline_scrape(f"scraped_data/{i}/File.html")
 
 
