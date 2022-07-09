@@ -44,6 +44,7 @@ class SmartphoneSpecScraper:
     # Why though? 
     # Well, I just feels it is easier for me since i've learn CSS
     self.data['modelname'] = soup.select_one('title').text.split("-")[0].strip() if soup.select_one('title') != None else 'undefined'
+    self.data['modelname'] = self.data['modelname'].replace('/','--')
     print(f"Scraping {self.data['modelname']}...")
     self.data['image_url'] = soup.select_one(".specs-photo-main > a > img").attrs['src'] if soup.select_one(".specs-photo-main > a > img") else 'undefined'
     self.data['network_tech'] = soup.select_one('[data-spec="nettech"]').text.strip() if soup.select_one('[data-spec="nettech"]') != None else 'undefined'
@@ -123,7 +124,8 @@ urls = [
 
 # s.offline_scrape("scraped_data/14/File.html")
 # import time
-for i in range(348,428):
+for i in range(428,598):
+  print(i)
   s.offline_scrape(f"scraped_data/{i}/File.html")
 
 
