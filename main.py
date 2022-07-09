@@ -43,7 +43,7 @@ class SmartphoneSpecScraper:
     # I prefer using css selector to select the data, 
     # Why though? 
     # Well, I just feels it is easier for me since i've learn CSS
-    self.data['modelname'] = soup.select_one('[data-spec="modelname"]').text.strip() if soup.select_one('[data-spec="modelname"]') != None else 'undefined'
+    self.data['modelname'] = soup.select_one('title').text.split("-")[0].strip() if soup.select_one('title') != None else 'undefined'
     self.data['image_url'] = soup.select_one(".specs-photo-main > a > img").attrs['src'] if soup.select_one(".specs-photo-main > a > img") else 'undefined'
     self.data['network_tech'] = soup.select_one('[data-spec="nettech"]').text.strip() if soup.select_one('[data-spec="nettech"]') != None else 'undefined'
     self.data['network_3g_bands'] = soup.select_one('[data-spec="net3g"]').text.strip() if soup.select_one('[data-spec="net3g"]') != None else 'undefined'
@@ -104,7 +104,6 @@ class SmartphoneSpecScraper:
 s = SmartphoneSpecScraper()
 
 urls = [
-  "https://m.gsmarena.com/samsung_galaxy_a23-11373.php",
   "https://m.gsmarena.com/samsung_galaxy_m23-11403.php",
   "https://m.gsmarena.com/samsung_galaxy_m33-11404.php",
   "https://m.gsmarena.com/samsung_galaxy_f23-11406.php",
@@ -120,9 +119,10 @@ urls = [
   "https://m.gsmarena.com/samsung_galaxy_f22-10996.php"
 ]
 
+# s.offline_scrape("scraped_data/Apple iPhone 12 - Full phone specifications.html")
 import time
 for url in urls:
   s.online_scrape(url, save_html=True)
-  time.sleep(20)
+  time.sleep(30)
 
 
