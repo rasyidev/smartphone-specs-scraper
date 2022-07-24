@@ -124,7 +124,7 @@ urls = [
 
 # s.offline_scrape("scraped_data/14/File.html")
 # import time
-for i in range(616,715):
+for i in range(715,745):
   # print(i)
   s.offline_scrape(f"scraped_data/{i}/File.html")
 
